@@ -1,3 +1,3 @@
 def accounts():
     # list of accounts
-    return []
+    return ['redacted', 'redacted', 'redacted']
