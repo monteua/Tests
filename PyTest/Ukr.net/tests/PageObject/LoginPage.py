@@ -1,8 +1,13 @@
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
-from PageObject.Locators import *
 import time
 
+# locators
+url = 'http://mail.ukr.net/'
+login_loc = "login"
+password_loc = "password"
+submit_loc = "//*[@id='login-form']//button"
+incorrect_data_loc = 'login__error show'
 
 class LoginPage(object):
     def __init__(self, driver):

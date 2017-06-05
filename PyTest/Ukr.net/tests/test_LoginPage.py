@@ -1,5 +1,9 @@
 from PageObject.LoginPage import LoginPage
-from PageObject.testData import *
+
+login_valid = 'login_valid'
+password_valid = 'password_valid'
+login_invalid = 'login_invalid'
+password_invalid = 'password_invalid'
 
 
 # valid login and password for registered user
