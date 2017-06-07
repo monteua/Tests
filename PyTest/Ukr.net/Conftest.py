@@ -13,7 +13,7 @@ def pytest_addoption(parser):
 @pytest.fixture
 def driver(request):
     browser = request.config.getoption('browser')
-    driver = BROWSER[browser]()
-    driver.implicitly_wait(10)
-    request.addfinalizer(driver.quit)
-    return driver
+    _driver = BROWSER[browser]()
+    _driver.implicitly_wait(10)
+    request.addfinalizer(_driver.quit)
+    return _driver
