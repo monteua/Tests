@@ -3,7 +3,7 @@ from selenium.common.exceptions import NoSuchElementException
 import time
 
 # locators
-url = 'http://mail.ukr.net/'
+url = 'https://mail.ukr.net/desktop/login?lang=en'
 login_loc = "login"
 password_loc = "password"
 submit_loc = "//*[@id='login-form']//button"

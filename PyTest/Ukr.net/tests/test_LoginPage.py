@@ -1,3 +1,4 @@
+from random import randint
 from PageObject.LoginPage import LoginPage
 
 login_valid = 'login_valid'
@@ -26,6 +27,24 @@ def test_enter_invalid_data(driver):
 def test_blank_data(driver):
     LoginPage(driver).open_page()
     LoginPage(driver).enter_data("", "")
+    error = LoginPage(driver).error_displayed()
+    if error[0]:
+        assert "Login or password is incorrect." in error[1]
+
+
+# blank login and valid password
+def test_blank_login(driver):
+    LoginPage(driver).open_page()
+    LoginPage(driver).enter_data("" ,'mega_test_data' + str(randint(1000, 100000)))
+    error = LoginPage(driver).error_displayed()
+    if error[0]:
+        assert "Login or password is incorrect." in error[1]
+
+
+# valid login and blank password
+def test_blank_password(driver):
+    LoginPage(driver).open_page()
+    LoginPage(driver).enter_data('mega_test_data' + str(randint(1000, 100000)), "")
     error = LoginPage(driver).error_displayed()
     if error[0]:
         assert "Login or password is incorrect." in error[1]
