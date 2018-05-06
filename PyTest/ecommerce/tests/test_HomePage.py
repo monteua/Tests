@@ -54,3 +54,15 @@ def test_sign_in_button(driver):
     assert "login" in sign_in["title"].lower()
     print("Login page opened, current url: " + sign_in["url"])
 
+
+# Test 6: verify that header logo displays and is linked to homepage
+def test_header_logo(driver):
+    Page(driver).open_url
+    logo = Page(driver).is_logo_displayed_and_links_to_homepage
+
+    assert logo['logo_visible']
+    print("Header logo is displayed")
+    assert "automationpractice.com" in logo['logo_link'].lower()
+    print("Logo links to the homepage")
+    assert logo["current_url"] == "http://automationpractice.com/index.php"
+    print("I'm on the HomePage after logo was clicked")
