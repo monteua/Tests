@@ -66,3 +66,18 @@ def test_header_logo(driver):
     print("Logo links to the homepage")
     assert logo["current_url"] == "http://automationpractice.com/index.php"
     print("I'm on the HomePage after logo was clicked")
+
+
+# Test 7. verify that search box displays correctly and works - opens correct url in normal conditions
+@pytest.mark.parametrize('query', ["shirt"])
+def test_search_box(driver, query):
+    Page(driver).open_url
+    search = Page(driver).is_search_displayed_and_working
+
+    assert search['search_box_visible']
+    print("Search box is found")
+    assert 'search' in search['ghost_text'].lower()
+    print("Ghosted text is present in search bar")
+    assert 'search' in search['title'].lower()
+    print("Search page opened")
+    assert query in search['current_url']

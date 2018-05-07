@@ -15,7 +15,9 @@ class HomePage(object):
         "contact_us_loc": (By.ID, "contact-link"),
         "sign_in": (By.CLASS_NAME, "header_user_info"),
         "header_logo": (By.XPATH, "//*[@id='header_logo']"),
-        "header_logo_link": (By.XPATH, "//*[@id='header_logo']/a")
+        "header_logo_link": (By.XPATH, "//*[@id='header_logo']/a"),
+        "search_box": (By.ID, "search_query_top"),
+        "search_button": (By.XPATH, "//*[@class='btn btn-default button-search']")
     }
 
     @property
@@ -56,3 +58,15 @@ class HomePage(object):
         logo_link = self.driver.find_element(*self.locator_dictionary['header_logo_link']).get_attribute('href')
         logo.click()
         return dict(logo_visible=logo_displayed, logo_link=logo_link, current_url=self.driver.current_url)
+
+    @property
+    def is_search_displayed_and_working(self, prompt):
+        search_box = self.driver.find_element(*self.locator_dictionary['search_box'])
+        search_button = self.driver.find_element(*self.locator_dictionary['seach_button'])
+        ghost_text = search_box.get_attribute('placeholder')
+
+        search_box.send_keys(prompt)
+        search_button.click()
+
+        return dict(search_box_visible=search_box.is_displayed(), ghost_text=ghost_text,
+                    title=self.driver.title, current_url=self.driver.current_url)
