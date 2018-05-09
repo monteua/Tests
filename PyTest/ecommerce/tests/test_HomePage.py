@@ -4,6 +4,7 @@ import pytest
 page_title = "my store"
 opened_url = "http://automationpractice.com/index.php"
 phone_number_text = "call us now: 0123-456-789"
+shirt = 'shirt'
 
 
 # Test 1: verify if page fully loads with correct title and desired url opened
@@ -69,15 +70,14 @@ def test_header_logo(driver):
 
 
 # Test 7. verify that search box displays correctly and works - opens correct url in normal conditions
-@pytest.mark.parametrize('query', ["shirt"])
-def test_search_box(driver, query):
+@pytest.mark.parametrize('prompt', [shirt])
+def _test_search_box(driver, prompt):
     Page(driver).open_url
-    search = Page(driver).is_search_displayed_and_working
+    Page(driver).is_search_displayed_and_working(prompt)
 
-    assert search['search_box_visible']
-    print("Search box is found")
-    assert 'search' in search['ghost_text'].lower()
-    print("Ghosted text is present in search bar")
-    assert 'search' in search['title'].lower()
-    print("Search page opened")
-    assert query in search['current_url']
+
+# Test 8. verify that shopping card displayed on the page and is empty
+def test_visibility_of_shopping_card(driver):
+    Page(driver).open_url
+    Page(driver).is_shopping_card_displayed
+

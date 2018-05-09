@@ -17,7 +17,8 @@ class HomePage(object):
         "header_logo": (By.XPATH, "//*[@id='header_logo']"),
         "header_logo_link": (By.XPATH, "//*[@id='header_logo']/a"),
         "search_box": (By.ID, "search_query_top"),
-        "search_button": (By.XPATH, "//*[@class='btn btn-default button-search']")
+        "search_button": (By.XPATH, "//*[@class='btn btn-default button-search']"),
+        "shopping_card": (By.CLASS_NAME, "shopping_cart")
     }
 
     @property
@@ -59,14 +60,31 @@ class HomePage(object):
         logo.click()
         return dict(logo_visible=logo_displayed, logo_link=logo_link, current_url=self.driver.current_url)
 
-    @property
     def is_search_displayed_and_working(self, prompt):
         search_box = self.driver.find_element(*self.locator_dictionary['search_box'])
-        search_button = self.driver.find_element(*self.locator_dictionary['seach_button'])
+        search_button = self.driver.find_element(*self.locator_dictionary['search_button'])
+        assert search_box.is_displayed()
+        print("Search box is found")
+
         ghost_text = search_box.get_attribute('placeholder')
+        assert 'search' in ghost_text.lower()
+        print("Ghosted text is present in search bar")
 
         search_box.send_keys(prompt)
         search_button.click()
 
-        return dict(search_box_visible=search_box.is_displayed(), ghost_text=ghost_text,
-                    title=self.driver.title, current_url=self.driver.current_url)
+        assert 'search' in self.driver.title.lower()
+        print("Search page opened")
+        assert prompt in self.driver.current_url
+
+    def is_shopping_card_displayed(self):
+        shopping_card = self.driver.find_element(*self.locator_dictionary['shopping_card'])
+        assert shopping_card.is_displayed()
+        print("Shopping card is displayed.")
+        assert "Cart (empty)".lower() in shopping_card.text().lower()
+        print(shopping_card.text(), "is displayed")
+
+        shopping_card.click()
+        assert self.driver.current_url != base_url
+        print("After click on shopping cart, shopping cart page was opened")
+        print("New url: " + self.driver.current_url)
